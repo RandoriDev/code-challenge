@@ -1,0 +1,25 @@
+{
+  "name": "randori-code-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "start:dev": "NODE_ENV=dev ./node_modules/nodemon/bin/nodemon.js ./src/server.js",
+    "test": "NODE_ENV=test jest --coverage --runInBand --forceExit"
+  },
+  "author": "Aaron Rosano",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^9.3.1",
+    "bufferutil": "^4.0.1",
+    "canvas": "^2.6.1",
+    "expect": "^26.2.0",
+    "jest": "^26.2.2",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2",
+    "utf-8-validate": "^5.0.2"
+  }
+}
