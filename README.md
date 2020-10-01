@@ -12,3 +12,18 @@ We would like you to build a service that will accept HTTP requests, inspects th
 5.  All processed requests should be clearly logged.
 
 At Randori we value core software engineering principles and we are looking more for that than just a high performance solution.  We favor a maintainable, testable implementation with clear documentation.  Don’t be afraid to reach out if anything in the requirements doesn’t make sense;  We are happy to clarify any questions you have.    This assignment should ideally should take no more than 4-6 hours.
+
+--------------------------------------------------------------------
+
+Randori Code Challenge using GoLang.
+
+In Order to Run:
+    - Open two Visaul Studio Code Instances, one at the root, one in the "fake_endpoint" folder.
+    - run the "fake_endpoint/endpoint.go" file
+    - run the "main.go" file in the root
+    - using curl or postman, you can now send POST commands with JSON bodies.
+    - If you want to see it working on a real api, modify the "main.go" URL and re-run "main". You won't need the "fake_endpoint" at that point
+
+Tests:
+    - There is a file "http_test.go" that you can run tests on, it requires the "fake_endpoint", and "main.go" files to be in their original state (i.e. Looking at Localhost)
+    - just run "go test http_test.go"
