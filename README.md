@@ -18,12 +18,12 @@ At Randori we value core software engineering principles and we are looking more
 Randori Code Challenge using GoLang.
 
 In Order to Run:
-    - Open two Visaul Studio Code Instances, one at the root, one in the "fake_endpoint" folder.
-    - run the "fake_endpoint/endpoint.go" file
-    - run the "main.go" file in the root
-    - using curl or postman, you can now send POST commands with JSON bodies.
-    - If you want to see it working on a real api, modify the "main.go" URL and re-run "main". You won't need the "fake_endpoint" at that point
+1.  Open two Visaul Studio Code Instances, one at the root, one in the "fake_endpoint" folder.
+2.  run the "fake_endpoint/endpoint.go" file
+3.  run the "main.go" file in the root
+4.  using curl or postman, you can now send POST commands with JSON bodies.
+5.  If you want to see it working on a real api, modify the "main.go" URL and re-run "main". You won't need the "fake_endpoint" at that point
 
 Tests:
-    - There is a file "http_test.go" that you can run tests on, it requires the "fake_endpoint", and "main.go" files to be in their original state (i.e. Looking at Localhost)
-    - just run "go test http_test.go"
+1.  There is a file "http_test.go" that you can run tests on, it requires the "fake_endpoint", and "main.go" files to be in their original state (i.e. Looking at Localhost)
+2.  just run "go test http_test.go"
