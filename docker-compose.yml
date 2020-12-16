@@ -1,0 +1,18 @@
+version: '3'
+services:
+  base-image: &shared-image
+    build: .
+    image: "clay-gardner/randori-demo:latest"
+    environment:
+      - RATE_LIMITED_PAUSE_SECONDS=2
+      - RATE_LIMITED_AGE_SECONDS=5
+  app:
+    <<: *shared-image
+    command: "python3 app.py"
+    ports:
+      - "8080:8080"
+  tests:
+    <<: *shared-image
+    environment:
+      - RATE_LIMITED_PAUSE_SECONDS=1
+    command: "python3 -m pytest"
