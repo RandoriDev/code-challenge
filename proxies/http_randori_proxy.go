@@ -55,6 +55,12 @@ func (rp *randoriProxy) ServeHTTP(writer http.ResponseWriter, req *http.Request)
 
 	rp.verifyLastRequestByClient(request, req)
 
+	log.WithFields(log.Fields{
+		"method": req.Method,
+		"IP":     req.RemoteAddr,
+		"Path":   req.URL.Path,
+		"Body":   request,
+	}).Debug("Request sent to the backend")
 	rp.proxy.ServeHTTP(writer, req)
 }
 
