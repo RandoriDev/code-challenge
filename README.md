@@ -12,3 +12,40 @@ We would like you to build a service that will accept HTTP requests, inspects th
 5.  All processed requests should be clearly logged.
 
 At Randori we value core software engineering principles and we are looking more for that than just a high performance solution.  We favor a maintainable, testable implementation with clear documentation.  Don’t be afraid to reach out if anything in the requirements doesn’t make sense;  We are happy to clarify any questions you have.    This assignment should ideally should take no more than 4-6 hours.
+
+
+#  How to start it
+To start the project just use:
+`sh start.sh` (In the root directory of this project)
+
+## Examples of usage
+```bash 
+curl -S -X POST "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "debit", "amount": 900.5, "is_malicious": true}' |jq
+curl -S -X POST "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "debit", "amount": 900.5, "is_malicious": false}' |jq  
+curl -S -X GET "http://localhost:8080/api/v1/da-api/transaction/foo/bar" |jq
+curl -S -X GET "http://localhost:8080/api/v1/da-api/transaction/foo/bar" |jq
+curl -S -X GET "http://localhost:8080/api/v1/da-api/transaction/foo/bar" |jq 
+curl -S -X PUT "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "credit","amount": 1990.5}' |jq
+curl -S -X PUT "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "credit","amount": 1990.5, "is_malicious": true}' |jq
+curl -S -X PUT "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "credit","amount": 1990.5, "is_malicious": false}' |jq 
+curl -S -X PATCH "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "credit","amount": 2990.5}' |jq
+curl -S -X PATCH "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "credit","amount": 2990.5, "is_malicious": true}' |jq
+curl -S -X PATCH "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "credit","amount": 2990.5, "is_malicious": false}' |jq 
+curl -S -X OPTIONS "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "credit","amount": 3990.99}' |jq
+curl -S -X OPTIONS "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "credit","amount": 3990.99, "is_malicious": true}' |jq
+curl -S -X OPTIONS "http://localhost:8080/api/v1/da-api/transaction" -H 'Content-Type: application/json' -d '{"type": "credit","amount": 3990.99, "is_malicious": false}' |jq
+curl -X DELETE http://localhost:8080/api/v1/da-api/transaction -H 'Content-Type: application/json' -d '{"type": "credit","amount": 3990.99}' 
+curl -X DELETE http://localhost:8080/api/v1/da-api/transaction -H 'Content-Type: application/json' -d '{"type": "credit","amount": 3990.99, "is_malicious": true}' |jq 
+curl -X DELETE http://localhost:8080/api/v1/da-api/transaction -H 'Content-Type: application/json' -d '{"type": "credit","amount": 3990.99, "is_malicious": false}' |jq 
+```                
+
+## Using health check
+```bash
+curl -s -X GET localhost:8080/api/v1/da-api/ping
+```       
+         
+## Run with docker
+```bash
+docker build -t da-api .
+docker run -dp 8080:8080 da-api
+``` 
