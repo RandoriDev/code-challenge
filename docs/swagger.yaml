@@ -1,0 +1,39 @@
+info:
+  contact:
+    email: miguell.beneditt@gmail.com
+    name: API Support
+  description: This Api fowards Post request back to the client
+  title: Data Art Challange
+  version: "1.0"
+paths:
+  /api:
+    post:
+      consumes:
+      - application/json
+      description: given a incoming request it fowards the message, if a key "is_malicous"
+        is detected the request returns Unauthorized
+      operationId: foward-request
+      parameters:
+      - description: Data
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "500":
+          description: Internal Server error
+          schema:
+            type: string
+      summary: fowards the incoming request
+      tags:
+      - post
+swagger: "2.0"
