@@ -6,23 +6,36 @@ services:
     hostname: ${REDIS_HOST}
     image: redis:6.0.10-alpine
 
-  app-server:
-    hostname: ${APP_SERVER_HOSTNAME}
+  backend-server:
+    hostname: ${BACKEND_SERVER_HOSTNAME}
     environment:
-      REDIS_HOST: ${REDIS_HOST}
-      PORT: ${APP_SERVER_PORT}
+      PORT: ${BACKEND_SERVER_PORT}
     build:
       context: .
-      dockerfile: ./app-server/Dockerfile
+      dockerfile: ./backend-server/Dockerfile
     ports:
-      - 8088:${APP_SERVER_PORT}
+      - 8089:${BACKEND_SERVER_PORT}
+
+  gateway-server:
+    hostname: ${GATEWAY_SERVER_HOSTNAME}
+    environment:
+      REDIS_HOST: ${REDIS_HOST}
+      PORT: ${GATEWAY_SERVER_PORT}
+      BACKEND_SERVER_HOSTNAME: ${BACKEND_SERVER_HOSTNAME}
+      BACKEND_SERVER_PORT: ${BACKEND_SERVER_PORT}
+    build:
+      context: .
+      dockerfile: ./gateway-server/Dockerfile
+    ports:
+      - 8088:${GATEWAY_SERVER_PORT}
     depends_on:
       - redis
+      - backend-server
 
   test-client:
     environment:
-      TARGET_HOSTNAME: ${APP_SERVER_HOSTNAME}
-      TARGET_PORT: ${APP_SERVER_PORT}
+      TARGET_HOSTNAME: ${GATEWAY_SERVER_HOSTNAME}
+      TARGET_PORT: ${GATEWAY_SERVER_PORT}
     build:
       context: .
       dockerfile: ./test-client/Dockerfile

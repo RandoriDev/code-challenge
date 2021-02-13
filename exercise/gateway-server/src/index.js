@@ -1,9 +1,9 @@
 const Koa = require('koa');
+const proxy = require('koa-proxy');
 const bodyParser = require('koa-bodyparser');
 const DelayDupli = require('./middlewares/DelayDupli');
 const RejectMaliciousJSONPosts = require('./middlewares/RejectMaliciousJSONPosts');
-const RequestLog = require('./middlewares/RequestLog');
-const GenericService = require('./services/GenericService');
+const { RequestLog } = require('lib');
 
 class Main {
 
@@ -16,6 +16,8 @@ class Main {
   static run() {
     const app = new Koa();
     const listenPort = process.env.PORT === undefined ? 8088 : parseInt(process.env.PORT);
+    const backendHostname = process.env.BACKEND_SERVER_HOSTNAME === undefined ? 'localhost' : process.env.BACKEND_SERVER_HOSTNAME;
+    const backendPort = process.env.BACKEND_SERVER_PORT === undefined ? 8089 : parseInt(process.env.BACKEND_SERVER_PORT)
 
     // Middleware chain
     app.use(RequestLog.execute);
@@ -29,10 +31,10 @@ class Main {
 
     app.use(RejectMaliciousJSONPosts.execute);
     app.use(DelayDupli.execute);
-
-    // No routing, just pass everythign to this very generic backend which handles all our requests
-    // indescriminantly
-    app.use(GenericService.execute);
+    app.use(proxy({
+      host: `http://${backendHostname}:${backendPort}`,
+      jar: true,    // Enable cookie forwarding
+    }));
 
     app.listen(listenPort, () => {
       console.log(`Listening on port ${listenPort}`);

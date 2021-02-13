@@ -1,4 +1,4 @@
-const LogUtils = require('../utils/LogUtils');
+const { LogUtils } = require('lib');
 
 /**
  * Middlewhere encapsulation which rejects POST requests containing JSON payloads which contain a

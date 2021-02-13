@@ -1,4 +1,4 @@
-const StringUtils = require('../utils/StringUtils');
+const StringUtils = require('./StringUtils');
 
 /**
  * Utility class for event logging

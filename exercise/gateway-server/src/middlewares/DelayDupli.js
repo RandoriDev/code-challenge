@@ -1,7 +1,9 @@
 const crypto = require('crypto');
 const CacheUtils = require('../utils/CacheUtils');
-const TimerUtils = require('../utils/TimerUtils');
-const LogUtils = require('../utils/LogUtils');
+const {
+  LogUtils,
+  TimerUtils,
+} = require('lib');
 
 /**
  * Middleware encapsulation which incurs a 2 second delay penalty before continuing down the

@@ -1,4 +1,4 @@
-const LogUtils = require('../utils/LogUtils');
+const LogUtils = require('./LogUtils');
 
 /**
  * Middleware encapsulation which logs HTTP requests before and after processing.  The following
