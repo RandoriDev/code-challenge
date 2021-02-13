@@ -132,6 +132,7 @@ const doGet = (requestURL) => {
 (async () => {
   let url = randoUrl();
   let isGet = true;
+  let cleanRequests = 0;
   while(true) {
     // 70% chance of getting a random path/url
     if (Math.random() < 0.80) {
@@ -165,17 +166,25 @@ const doGet = (requestURL) => {
     }
     const endTime = new Date().getTime();
 
-    if (isMalicious === true) {
-      assert(response.status === 401)
-    } else {
-      assert(200 <= response.status < 300);
+    if (error === null) {
+      cleanRequests ++;
+
+      if (isMalicious === true) {
+        assert(response.status === 401)
+      } else {
+        assert(200 <= response.status < 300);
+      }
     }
 
-    const duration = endTime - startTime;
-    if (curRequestHash === prevRequestHash && isMalicious === false) {
-      assert(duration > 2000, `Time was too quick for a duplicate request ${duration}ms`);
-    } else {
-      assert(duration < 300, `Time was too slow for a non-duplicate request ${duration}ms`);
+    // Avoids the issue of startup whereby each connection is liable to fail
+    if (cleanRequests >= 2) {
+      const duration = endTime - startTime;
+      if (curRequestHash === prevRequestHash && isMalicious === false) {
+        console.log("Request was a duplicate")
+        assert(duration > 2000, `Time was too quick for a duplicate request ${duration}ms`);
+      } else {
+        assert(duration < 300, `Time was too slow for a non-duplicate request ${duration}ms`);
+      }
     }
 
     prevRequestHash = curRequestHash;
