@@ -81,6 +81,10 @@ const sleep = (nMsec) => {
  * Initiates a POST request to our application server.  Some posts contain malcious data,
  * some don't.  Depends on random variable.
  * Returns a promise.
+ *
+ * @param {string} requestURL - Request URL
+ * @param {boolean} isMalicious - Is the request malicious intended to be malicious
+ * @returns
  */
 const doPost = (requestURL, isMalicious) => {
   const options = {
@@ -110,6 +114,9 @@ const doPost = (requestURL, isMalicious) => {
 /**
  * Initiates a GET request to our application server.
  * Returns a promise.
+ *
+ * @param {string} requestURL - Request URL
+ * @returns
  */
 const doGet = (requestURL) => {
   curRequestHash = [
