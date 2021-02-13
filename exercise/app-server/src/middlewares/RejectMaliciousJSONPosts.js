@@ -40,6 +40,6 @@ class RejectMaliciousJSONPosts {
 RejectMaliciousJSONPosts.POST_METHOD = 'POST';
 RejectMaliciousJSONPosts.CONTENT_TYPE_HEADER = 'content-type';
 RejectMaliciousJSONPosts.JSON_CONTENT_TYPE = 'application/json';
-RejectMaliciousJSONPosts.MALICIOUS_KEY_RE = /"is_malicious"[\r\n\s]*:/;
+RejectMaliciousJSONPosts.MALICIOUS_KEY_RE = /"is_malicious"[\r\n\s]*:[\r\n\s]*"is_malicious"/;
 
 module.exports = RejectMaliciousJSONPosts;

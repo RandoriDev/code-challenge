@@ -25,10 +25,19 @@ const queryArgs = [
 ];
 
 const maliciousBodies = [
-  '{"is_malicious": true}',
-  '  {  "is_malicious"  :   "person"       }',
-  '["hello there", { "is_malicious" : "yup" }  ] ',
-  '["hello there", { \n\n"is_malicious" \n: "yup" }  ] ',
+  '{"is_malicious": "is_malicious"}',
+  '  {  "is_malicious"  :   "is_malicious"       }',
+  '["hello there", { "is_malicious" : "is_malicious" }  ] ',
+  '["hello there", { \n\n"is_malicious" \n: "is_malicious" }  ] ',
+];
+
+const nonMalciousBodies = [
+  '{"is_malicious": "Nope"}',
+  '  {  "is_malicious"  :   false       }',
+  '["hello there", { "is_malicious" : [ "no" ] }  ] ',
+  '["hello there", { \n\n"is_malicious" \n: "probably not" }  ] ',
+  '{"Nope": "is_malicious"}',
+  '  {  "hello"  :   "is_malicious"       }',
 ];
 
 // Make sure these are all valid
@@ -84,9 +93,7 @@ const doPost = (requestURL) => {
 
     options.body = maliciousBodies[Math.floor(Math.random() * maliciousBodies.length)];
   } else {
-    options.body = JSON.stringify({
-      'some key': 'some value'
-    });
+    options.body = nonMalciousBodies[Math.floor(Math.random() * nonMalciousBodies.length)];
   }
 
   return fetch(requestURL, options);
