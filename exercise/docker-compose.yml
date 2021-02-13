@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+
+  redis:
+    hostname: ${REDIS_HOST}
+    image: redis:6.0.10-alpine
+
+  app-server:
+    hostname: ${APP_SERVER_HOSTNAME}
+    environment:
+      REDIS_HOST: ${REDIS_HOST}
+      PORT: ${APP_SERVER_PORT}
+    build:
+      context: .
+      dockerfile: ./app-server/Dockerfile
+    ports:
+      - 8088:${APP_SERVER_PORT}
+    depends_on:
+      - redis
+
+  test-client:
+    environment:
+      TARGET_HOSTNAME: ${APP_SERVER_HOSTNAME}
+      TARGET_PORT: ${APP_SERVER_PORT}
+    build:
+      context: .
+      dockerfile: ./test-client/Dockerfile
