@@ -6,6 +6,7 @@
 
 const fetch = require('node-fetch');
 const querystring = require('querystring');
+const assert = require('assert');
 
 const HOSTNAME = process.env['TARGET_HOSTNAME'] === undefined ? 'localhost' : process.env['TARGET_HOSTNAME'];
 const PORT = process.env['TARGET_PORT'] === undefined ? 8088 : parseInt(process.env['TARGET_PORT']);
@@ -43,6 +44,9 @@ const nonMalciousBodies = [
 // Make sure these are all valid
 maliciousBodies.forEach(body => JSON.parse(body))
 
+let prevRequestHash = null
+let curRequestHash = null;
+
 /**
  * Generates a URL to our application server with a random path length
  *
@@ -78,9 +82,7 @@ const sleep = (nMsec) => {
  * some don't.  Depends on random variable.
  * Returns a promise.
  */
-const doPost = (requestURL) => {
-  const isMalicious = Math.random() < 1/4;
-
+const doPost = (requestURL, isMalicious) => {
   const options = {
     method: 'POST',
   }
@@ -96,6 +98,12 @@ const doPost = (requestURL) => {
     options.body = nonMalciousBodies[Math.floor(Math.random() * nonMalciousBodies.length)];
   }
 
+  curRequestHash = [
+    'POST',
+    requestURL,
+    options.body
+  ].join('|');
+
   return fetch(requestURL, options);
 }
 
@@ -104,6 +112,11 @@ const doPost = (requestURL) => {
  * Returns a promise.
  */
 const doGet = (requestURL) => {
+  curRequestHash = [
+    'GET',
+    requestURL,
+  ].join('|');
+
   return fetch(requestURL, {method: "GET"});
 }
 
@@ -113,31 +126,26 @@ const doGet = (requestURL) => {
   let url = randoUrl();
   let isGet = true;
   while(true) {
-    let prevMatches;
-
     // 70% chance of getting a random path/url
     if (Math.random() < 0.80) {
-      const newUrl = randoUrl();
-      const newIsGet = Math.random() < 0.5;
-      prevMatches = (newUrl === url && newIsGet === isGet);
-      url = newUrl;
-      isGet = newIsGet;
-
-    } else {
-      prevMatches = true;
+      url = randoUrl();
+      isGet = Math.random() < 0.5;
     }
 
-    if (prevMatches) {
-      console.log("About to issue a request that matches the previous one");
+    let isMalicious;
+    if (isGet === true) {
+      isMalicious = false;
     } else {
-      console.log("About to issue a request");
+      isMalicious = Math.random() < 1/4;
     }
 
+    console.log("Sending request")
+    const startTime = new Date().getTime();
     const method = isGet === true ? doGet : doPost;
     const [
       response,
       error
-    ] = await method(url).then(r => [r, null]).catch(e => [null, e]);
+    ] = await method(url, isMalicious).then(r => [r, null]).catch(e => [null, e]);
     if (error) {
       console.error(error);
     } else {
@@ -148,8 +156,25 @@ const doGet = (requestURL) => {
         console.log(data);
       }
     }
+    const endTime = new Date().getTime();
 
+    if (isMalicious === true) {
+      assert(response.status === 401)
+    } else {
+      assert(200 <= response.status < 300);
+    }
+
+    const duration = endTime - startTime;
+    if (curRequestHash === prevRequestHash && isMalicious === false) {
+      assert(duration > 2000, `Time was too quick for a duplicate request ${duration}ms`);
+    } else {
+      assert(duration < 300, `Time was too slow for a non-duplicate request ${duration}ms`);
+    }
+
+    prevRequestHash = curRequestHash;
     // Wait a second in between requests, just to avoid bombarding the logs in an unreadible way
     await sleep(1000);
   }
- })();
+ })().catch(e => {
+   console.error(e);
+ })
