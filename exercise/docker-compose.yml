@@ -1,0 +1,45 @@
+version: "3.3"
+
+services:
+
+  redis:
+    restart: always
+    hostname: ${REDIS_HOST}
+    image: redis:6.0.10-alpine
+
+  backend-server:
+    restart: always
+    hostname: ${BACKEND_SERVER_HOSTNAME}
+    environment:
+      PORT: ${BACKEND_SERVER_PORT}
+    build:
+      context: .
+      dockerfile: ./backend-server/Dockerfile
+    ports:
+      - 8089:${BACKEND_SERVER_PORT}
+
+  gateway-server:
+    restart: always
+    hostname: ${GATEWAY_SERVER_HOSTNAME}
+    environment:
+      REDIS_HOST: ${REDIS_HOST}
+      PORT: ${GATEWAY_SERVER_PORT}
+      BACKEND_SERVER_HOSTNAME: ${BACKEND_SERVER_HOSTNAME}
+      BACKEND_SERVER_PORT: ${BACKEND_SERVER_PORT}
+    build:
+      context: .
+      dockerfile: ./gateway-server/Dockerfile
+    ports:
+      - 8088:${GATEWAY_SERVER_PORT}
+    depends_on:
+      - redis
+      - backend-server
+
+  test-client:
+    restart: always
+    environment:
+      TARGET_HOSTNAME: ${GATEWAY_SERVER_HOSTNAME}
+      TARGET_PORT: ${GATEWAY_SERVER_PORT}
+    build:
+      context: .
+      dockerfile: ./test-client/Dockerfile
