@@ -1,0 +1,28 @@
+INFO:flask.app:do_work method called
+INFO:flask.app:do_work method called
+ERROR:flask.app:Malicious request received
+2021-02-24 08:46:03,739 INFO flask.app MainThread : app.main method called
+2021-02-24 08:46:03,753 INFO flask.app MainThread : app.main method called
+2021-02-24 08:46:03,754 ERROR flask.app MainThread : Malicious request received
+2021-02-24 09:16:03,790 INFO flask.app MainThread : app.main method called
+2021-02-24 09:16:03,798 INFO flask.app MainThread : app.main method called
+2021-02-24 09:16:03,799 ERROR flask.app MainThread : Malicious request received
+2021-02-24 10:24:47,518 INFO flask.app MainThread : httpservice.app.main method called
+2021-02-24 10:24:47,526 DEBUG urllib3.connectionpool MainThread : Starting new HTTP connection (1): 127.0.0.1:5001
+2021-02-24 10:24:47,540 DEBUG urllib3.connectionpool MainThread : http://127.0.0.1:5001 "GET / HTTP/1.1" 200 53
+2021-02-24 10:24:47,648 INFO flask.app MainThread : httpservice.app.main method called
+2021-02-24 10:24:47,648 ERROR flask.app MainThread : Malicious request received
+2021-02-24 10:25:33,646 INFO flask.app MainThread : httpservice.app.main method called
+2021-02-24 10:25:33,651 DEBUG urllib3.connectionpool MainThread : Starting new HTTP connection (1): 127.0.0.1:5001
+2021-02-24 10:25:33,659 DEBUG urllib3.connectionpool MainThread : http://127.0.0.1:5001 "GET / HTTP/1.1" 200 53
+2021-02-24 10:25:33,678 INFO flask.app MainThread : httpservice.app.main method called
+2021-02-24 10:25:33,678 ERROR flask.app MainThread : Malicious request received
+2021-02-24 10:25:56,965 INFO flask.app MainThread : httpservice.app.main method called
+2021-02-24 10:25:56,972 DEBUG urllib3.connectionpool MainThread : Starting new HTTP connection (1): 127.0.0.1:5001
+2021-02-24 10:25:58,669 INFO flask.app MainThread : httpservice.app.main method called
+2021-02-24 10:25:58,669 ERROR flask.app MainThread : Malicious request received
+2021-02-24 10:26:23,276 INFO flask.app MainThread : httpservice.app.main method called
+2021-02-24 10:26:23,284 DEBUG urllib3.connectionpool MainThread : Starting new HTTP connection (1): 127.0.0.1:5001
+2021-02-24 10:26:23,298 DEBUG urllib3.connectionpool MainThread : http://127.0.0.1:5001 "GET / HTTP/1.1" 200 53
+2021-02-24 10:26:23,325 INFO flask.app MainThread : httpservice.app.main method called
+2021-02-24 10:26:23,326 ERROR flask.app MainThread : Malicious request received
