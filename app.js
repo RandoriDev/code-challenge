@@ -11,8 +11,9 @@ const app = express();
 app.set('trust proxy', true); 
 
 app.use(logger('dev'));
-app.use(rawBodyMiddleware);
 app.use(express.urlencoded({ extended: false }));
+
+app.use(rawBodyMiddleware);
 app.use(isMaliciousMiddleware);
 app.use(repeatRequestMiddleware);
 app.use(expressProxy(BACKEND_SERVICE_URL));
