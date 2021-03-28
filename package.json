@@ -7,7 +7,6 @@
     "start": "node ./bin/www.js"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.17.1",
     "express-http-proxy": "^1.6.2",
