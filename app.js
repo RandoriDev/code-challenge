@@ -11,12 +11,12 @@ const app = express();
 
 app.set('trust proxy', true); 
 
-app.use(logger('dev'));
-
 app.use(requireContentTypeMiddleware);
 app.use(rawBodyMiddleware);
 app.use(isMaliciousMiddleware);
 app.use(repeatRequestMiddleware);
+
+app.use(logger('combined'));
 app.use(expressProxy(BACKEND_SERVICE_URL));
 
 export default app;
