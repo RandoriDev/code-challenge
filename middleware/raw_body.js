@@ -1,5 +1,8 @@
 import express from 'express';
 
+/**
+ * Express middleware to parse body and store both parsed and raw body.
+ */
 export const rawBodyMiddleware = express.raw({
     type: 'application/json',
     verify: (req, _, buf) => {
