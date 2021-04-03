@@ -50,4 +50,9 @@ async def __do_request(req: Request):
             raise ValidationError(resp.text, status_code=resp.status_code)
     if resp:
         resp = resp.json()
+    try:
+        ip_cache.save_request(req, hash_request(req))
+    except Exception as e:
+        raise e
+
     return await resp
