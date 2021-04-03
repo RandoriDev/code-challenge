@@ -1,14 +1,32 @@
-# code-challenge
-Software Developer Coding Challenge
+# Code Challenge
+This is an reverse proxy used to intercept requests and validate wether they are malicious or duplicated.
 
-Our goal is to better understand you as an engineer and not proficiency in any one specific language.  Please work in the language you are most comfortable so we can best understand how you work.  We need to make sure we can properly review the project so please stick to Python, Go, Java, C, C++, Javascript or Rust.  If your favorite language isn’t on the list, let us know and we can talk about it.
+## Installation
 
-We would like you to build a service that will accept HTTP requests, inspects them and then possibly pass them off to a backend service.  The requirements are as follows:
+Clone the repository
 
-1.  If the request is a POST with a json body that contains the key ‘is_malicious’ with the value then don’t forward the request and return a HTTP 401 to the client.
-2.  If the same client makes the exact same request twice in a row wait 2 seconds before passing the request to the backend.
-3.  If neither of the conditions are met then pass the request to the backend.
-4.  When a request is passed on to the backend it should be forwarded unaltered and the backend’s response should be returned to the client.  
-5.  All processed requests should be clearly logged.
+```bash
+git clone https://github.com/carlos2606/code_challenge.git
+```
 
-At Randori we value core software engineering principles and we are looking more for that than just a high performance solution.  We favor a maintainable, testable implementation with clear documentation.  Don’t be afraid to reach out if anything in the requirements doesn’t make sense;  We are happy to clarify any questions you have.    This assignment should ideally should take no more than 4-6 hours.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all the requirements.
+
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
+Create a .env file in the root of the project with the variables in .env-template file. These environment variables will be loaded with the library dotenv.
+
+Run the API server with the following command:
+
+```bash
+python main.py
+```
+
+## Docs
+FastAPI has OpenAPI integrated to all its projecs. Then all you need is go to the url "localhost:<port>/docs" to see more information about the endpoints
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
