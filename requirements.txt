@@ -1,0 +1,8 @@
+Flask
+flask_restful
+flask-cors
+jsonpickle==0.9.5
+jsonschema==2.6.0
+py-healthcheck==1.7.0
+pylint==1.8.1
+PyYAML==3.12
