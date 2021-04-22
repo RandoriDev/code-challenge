@@ -12,3 +12,20 @@ We would like you to build a service that will accept HTTP requests, inspects th
 5.  All processed requests should be clearly logged.
 
 At Randori we value core software engineering principles and we are looking more for that than just a high performance solution.  We favor a maintainable, testable implementation with clear documentation.  Don’t be afraid to reach out if anything in the requirements doesn’t make sense;  We are happy to clarify any questions you have.    This assignment should ideally should take no more than 4-6 hours.
+
+=======================
+
+What I completed:
+- Wrote a server with the logic as requested
+  - Wrote a logger middleware to log information about each processed request
+- Wrote a backend server to respond to GET, POST, and PUT requests
+- Wrote 21 unit tests plus 5 "integration" tests that utilize the server to make calls to the backend server
+
+In hindsight, I should have written the is_duplicate and is_malicious logic as fastAPI middlewares. I didn't have time to do the rewrite.
+
+Ideas of what I would add to this project if I had more time:
+- Rewrite the is_duplicate and is_malicious logic as fastAPI middlewares
+- Add logic to wrap the Python module in a Docker image
+- Add logic to run the server and backend server as Docker containers, perhaps using Docker Compose
+
+Time taken: Around 8 hours

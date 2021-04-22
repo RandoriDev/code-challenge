@@ -1,0 +1,43 @@
+# Project specific
+venv/
+lib/
+.nox/
+configs/
+debug/
+
+# Byte-compiled
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+env/
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+sdist/
+wheels/
+*.egg-info/
+*.egg
+pip-wheel-metadata
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+coverage.xml
+
+# Spinx documentation
+docs/_build/
+
+# dotenv
+.envrc
+
+# Pycharm IDE files
+.idea
+
+# pytest cache
+.pytest_cache

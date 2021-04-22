@@ -1,0 +1,11 @@
+#
+# Flake8 configuration file
+#
+
+[flake8]
+exclude=.* *.egg *.egg-info *env* docs dist build lib setup.py
+ignore=Q000,E203,W503,D201,D202,D401
+max-line-length=120
+max_complexity=12
+import-order-style=pep8
+application-import-names=code_challenge,tests
