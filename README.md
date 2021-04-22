@@ -12,3 +12,6 @@ We would like you to build a service that will accept HTTP requests, inspects th
 5.  All processed requests should be clearly logged.
 
 At Randori we value core software engineering principles and we are looking more for that than just a high performance solution.  We favor a maintainable, testable implementation with clear documentation.  Don’t be afraid to reach out if anything in the requirements doesn’t make sense;  We are happy to clarify any questions you have.    This assignment should ideally should take no more than 4-6 hours.
+
+# Solution
+Flask app 'code_challenge' utilizes a middleware to check incoming post body data prior to Flask routing and a 2 second cache ensures no backend processing within that timeout. 
