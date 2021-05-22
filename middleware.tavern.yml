@@ -1,0 +1,25 @@
+test_name: Test Endpoint
+
+stages:
+
+  - name: Endpoint forwards request unaltered and the backend's response returns to the client
+    request:
+      url: http://127.0.0.1:8000
+      json:
+        foo: bar
+      method: POST
+      headers:
+        content-type: application/json
+    response:
+      status_code: 200
+
+  - name: Endpoint doesn't forward the request and returns a HTTP 401 to the client
+    request:
+      url: http://127.0.0.1:8000
+      json:
+        is_malicious: 1
+      method: POST
+      headers:
+        content-type: application/json
+    response:
+      status_code: 401
