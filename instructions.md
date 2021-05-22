@@ -31,5 +31,5 @@ Endpoint forwards request unaltered and the backend's response returns to the cl
 ```
 curl -XGET http://127.0.0.1:8000
 curl -XPOST http://127.0.0.1:8000
-curl -XPOST http://127.0.0.1:8000 -d '{"foo": 'bar"}'
+curl -XPOST http://127.0.0.1:8000 -d '{"foo": "bar"}'
 ```
