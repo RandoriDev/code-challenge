@@ -8,10 +8,11 @@ import json
 def lambda_handler(event, context):
 
     # Store posted text from query in variable
-    post_text = event['post_text']
+    text_field = event['text_field']
+    is_malicious = event['is_malicious']
 
     # Build response object
-    response = {'post_text': post_text}
+    response = {'text_field': text_field, 'is_malicious': is_malicious}
 
     # Build the HTTP response object from the response object
     response_http = {
@@ -19,7 +20,7 @@ def lambda_handler(event, context):
         'headers': {
             'Content-Type': 'application/json'
         },
-        'body': json.dumps(post_text)
+        'body': json.dumps(response)
     }
 
     return response_http

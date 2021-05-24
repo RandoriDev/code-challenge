@@ -1,21 +1,24 @@
 from flask import Flask, render_template, request, json, abort
 from flask_sqlalchemy import SQLAlchemy
-from flask_lambda import FlaskLambda
+import requests
+from requests.auth import HTTPBasicAuth
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
 
+# Credentials for backend REST API (no authentication required)
+API_URL = 'https://5fr2ve0kda.execute-api.us-east-1.amazonaws.com/production/code-challenge-api/'
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():  # Display index.html as default
     if request.method == 'POST':
-        received_json = json.loads(request.form['text_field'])
-
-        if received_json['is_malicious'] == 'is_malicious':
-            abort(401)  # Respond with 401 unauthorized error
+        post_received_json = json.dumps(request.form)
+        if request.form.getlist('is_malicious') == ['is_malicious']:
+            abort(401)
         else:
-            # If the is_malicious key/value is not found, return the entire JSON response to display.
-            return render_template('index.html', received_post=received_json)
-
+            api_post = requests.post(url=API_URL, json=post_received_json)
+            return render_template('index.html', received_post=post_received_json)
     else:
         return render_template('index.html')
 

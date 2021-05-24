@@ -9,18 +9,13 @@
     <p>New P Index</p>
 
     <p>Received Post: {{ received_post }}</p>
-    <p>Is Malicious?: {{ is_malicious }}</p>
 
-    <form action="/" method="POST" name="main_form" id="main_form">
+    <form action="{{ url_for('index') }}" method="POST" name="main_form" id="main_form">
         <textarea id="text_field" name="text_field" rows="20" cols="100">
-{
-    "employee": {
-        "name":       "sonoo",
-        "salary":      56000,
-        "married":    true
-    },
-    "is_malicious": "is_malicious"
-}</textarea>
+Any text here will be sent to the backend API and returned to this page.</textarea>
+        <br>
+        <input type="checkbox" value="is_malicious" name="is_malicious" checked>
+        <label for="is_malicious">Is Malicious</label>
         <br>
         <input type="submit" value="Submit Text">
     </form>
