@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, json, abort
+from flask_sqlalchemy import SQLAlchemy
+from flask_lambda import FlaskLambda
 
 app = Flask(__name__)
+db = SQLAlchemy(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():  # Display index.html as default
