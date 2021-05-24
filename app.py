@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, json
+from flask import Flask, render_template, request, json, abort
 
 app = Flask(__name__)
 
@@ -8,8 +8,9 @@ def index():  # Display index.html as default
         received_json = json.loads(request.form['text_field'])
 
         if received_json['is_malicious'] == 'is_malicious':
-            return render_template('index.html', received_post=received_json, is_malicious='is_malicious')       # received_post = request.json['text_field'] )  # received_post=request.form['text_field'])
+            abort(401)  # Respond with 401 unauthorized error
         else:
+            # If the is_malicious key/value is not found, return the entire JSON response to display.
             return render_template('index.html', received_post=received_json)
 
     else:
