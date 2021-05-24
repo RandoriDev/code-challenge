@@ -1,3 +1,7 @@
+# A REST API Designed to run on Amazon Lambda.
+# The API is POSTed to with a JSON object containing a single value:
+# post_text.  It then returns that value in JSON format.
+
 import json
 
 
@@ -7,14 +11,15 @@ def lambda_handler(event, context):
     post_text = event['post_text']
 
     # Build response object
-    response = []
-    response['post_text'] = post_text
+    response = {'post_text': post_text}
 
     # Build the HTTP response object from the response object
-    response_http = []
-    response_http['statusCode'] = 200
-    response_http['headers'] = {}
-    response_http['headers']['Content-Type'] = 'application/json'
-    response_http['body'] = json.dumps(post_text)
+    response_http = {
+        'statusCode': 200,
+        'headers': {
+            'Content-Type': 'application/json'
+        },
+        'body': json.dumps(post_text)
+    }
 
     return response_http
