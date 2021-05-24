@@ -1,1 +1,17 @@
 {% extends "layout.html" %}
+
+{% block head %}
+    <title>Randori Code Challenge</title>
+{% endblock %}
+
+{% block body %}
+    <h1>New Header Index</h1>
+    <p>New P Index</p>
+
+    <p>Received Post: {{ received_post }}</p>
+
+    <form action="/" method="POST">
+        <input type="text" name="text_field" id="text_field">
+        <input type="submit" value="Submit Text">
+    </form>
+{% endblock %}
