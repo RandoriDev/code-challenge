@@ -7,12 +7,13 @@ import json
 
 def lambda_handler(event, context):
 
+    print(event)
+
     # Store posted text from query in variable
     text_field = event['text_field']
-    is_malicious = event['is_malicious']
 
     # Build response object
-    response = {'text_field': text_field, 'is_malicious': is_malicious}
+    response = {'text_field': text_field}
 
     # Build the HTTP response object from the response object
     response_http = {

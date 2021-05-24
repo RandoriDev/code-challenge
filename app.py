@@ -7,18 +7,23 @@ app = Flask(__name__)
 db = SQLAlchemy(app)
 
 # Credentials for backend REST API (no authentication required)
-API_URL = 'https://5fr2ve0kda.execute-api.us-east-1.amazonaws.com/production/code-challenge-api/'
+API_URL = 'https://4rxx4pwar8.execute-api.us-east-1.amazonaws.com/live/code-challenge'
 
 
 @app.route('/', methods=['GET', 'POST'])
-def index():  # Display index.html as default
+def index():  # Display index.html as default.
     if request.method == 'POST':
-        post_received_json = json.dumps(request.form)
+        # JSON encode the HTML form submitted from index.html.
+        received_post_json = json.dumps(request.form)
         if request.form.getlist('is_malicious') == ['is_malicious']:
-            abort(401)
+            abort(401)  # Throw error: forbidden if is_malicious is flagged.
         else:
-            api_post = requests.post(url=API_URL, json=post_received_json)
-            return render_template('index.html', received_post=post_received_json)
+            # Ensure the MIME type is JSON in the HTTP headers.
+            headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+            api_response = requests.post(url=API_URL, data=received_post_json, headers=headers)
+
+            # Render the API response to index.html.
+            return render_template('index.html', received_post=api_response.json())
     else:
         return render_template('index.html')
 
