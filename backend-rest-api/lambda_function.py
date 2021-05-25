@@ -1,6 +1,7 @@
 # A REST API Designed to run on Amazon Lambda.
-# The API is POSTed to with a JSON object containing a single value:
-# post_text.  It then returns that value in JSON format.
+
+# The API receives an HTTP post with a JSON object containing a single value:
+# text_field.  It then returns that value encoded in JSON.
 
 import json
 
