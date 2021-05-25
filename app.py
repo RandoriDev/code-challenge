@@ -38,8 +38,9 @@ app.register_error_handler(401, unauthorized_abort)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def index():  # Display index.html as default
-    if request.method == 'GET':  # Log GET requests as well as POST requests
+def index():
+    if request.method == 'GET':  # Log GET requests.
+
         # Build request data for log entry
         log_entry_headers = str(request.headers)
 
@@ -50,10 +51,15 @@ def index():  # Display index.html as default
 
         return render_template('index.html')
 
-    elif request.method == 'POST':
+    elif request.method == 'POST':  # Log POST requests.
         log_entry_headers = str(request.headers)
+
         # Get the element from the hidden form that contains the JSON string from the main form
         post_received_json = request.form['json_element']
+
+        # Validate JSON and make sure the received request is JSON-encoded.
+        # Will throw an exception if fails, and cause a 401: Unauthorized response.
+        json.loads(request.form['json_element'])
 
         request_log = LogRequest(request_method='POST', request_headers=log_entry_headers,
                                  request_text=post_received_json, ip_address=request.remote_addr)
@@ -61,9 +67,9 @@ def index():  # Display index.html as default
         # Check by IP address if user posted the same request twice.
         query_result = request_log.query.filter_by(ip_address=request.remote_addr,
                                                    request_method='POST').order_by(LogRequest.id.desc()).first()
-
-        if query_result.request_text == post_received_json:
-            time.sleep(2)
+        if query_result:
+            if query_result.request_text == post_received_json:
+                time.sleep(2)
 
         # Add the database entry after the check.
         db.session.add(request_log)
@@ -71,9 +77,6 @@ def index():  # Display index.html as default
 
         # Convert JSON to dict
         post_received_dict = json.loads(post_received_json)
-
-        # Validate JSON and make sure the received request is JSON-encoded.
-        json.loads(request.form['json_element'])
 
         # Check if is_malicious is flagged and throw an exception if so.
         if post_received_dict['is_malicious'] == 'is_malicious':

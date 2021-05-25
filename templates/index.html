@@ -18,7 +18,7 @@
             <!-- Main form for the user to create input. Does not submit. -->
             <form name="main_form" id="main_form">
                 <textarea id="text_field" name="text_field" rows="20" cols="100">
-Any text here will be sent to the backend API and returned to this page.</textarea>
+Any text here will be sent to the backend REST API and returned to this page.</textarea>
                 <br>
                 <br>
                 <input type="checkbox" value="is_malicious" name="is_malicious" checked>
@@ -37,7 +37,7 @@ Any text here will be sent to the backend API and returned to this page.</textar
         </td>
     </tr>
     <tr>
-        <td><h3>Received Post:</h3><br>
+        <td><h3>API Response Received:</h3><br>
         <p>{{ api_response }}</p></td>
     </tr>
     </table>
