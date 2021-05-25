@@ -1,4 +1,4 @@
-function submit_json( form ){
+function submit_json( form ) {
     // Encodes the visible form data into a JSON string.
     form_json = to_json_string(form);
     // Stores the JSON-encoded string in a hidden element which will then be submitted.
@@ -28,6 +28,5 @@ function to_json_string( form ) {
             object[ name ] = value;
         }
     }
-
-    return JSON.stringify( object );
+    return JSON.stringify( object, null, '\t' );
 }

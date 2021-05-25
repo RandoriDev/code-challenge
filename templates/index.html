@@ -9,26 +9,37 @@
 
 <body>
 {% block body %}
-    <h1>New Header Index</h1>
-    <p>New P Index</p>
-
-    <p>Received Post: {{ received_post }}</p>
-
-    <!-- Main form for the user to create input. Does not submit. -->
-    <form name="main_form" id="main_form">
-        <textarea id="text_field" name="text_field" rows="20" cols="100">
+    <table>
+    <tr>
+        <td><br><h2>Randori Coding Challenge</h2><br></td>
+    </tr>
+    <tr>
+        <td>
+            <!-- Main form for the user to create input. Does not submit. -->
+            <form name="main_form" id="main_form">
+                <textarea id="text_field" name="text_field" rows="20" cols="100">
 Any text here will be sent to the backend API and returned to this page.</textarea>
-        <br>
-        <input type="checkbox" value="is_malicious" name="is_malicious" checked>
-        <label for="is_malicious">Is Malicious</label>
-        <br>
-    </form>
+                <br>
+                <br>
+                <input type="checkbox" value="is_malicious" name="is_malicious" checked>
+                <label for="is_malicious">Is Malicious</label>
+                <br>
+                <br>
+            </form>
 
-    <!-- Uses the input from main_form to call a Javascript function which encodes the data in JSON -->
-    <form action="{{ url_for('index') }}" onsubmit="submit_json(main_form)" name="hidden_form" id="hidden_form" method="POST">
-        <input type="hidden" name="json_element" id="json_element">
-        <!-- Submits all form information here. -->
-        <input type="submit" value="Submit Text">
-    </form>
+            <!-- Uses the input from main_form to call a Javascript function which encodes the data in JSON -->
+            <form action="{{ url_for('index') }}" onsubmit="submit_json(main_form)" name="hidden_form" id="hidden_form" method="POST">
+                <input type="hidden" name="json_element" id="json_element">
+                <!-- Submits all form information here. -->
+                <input type="submit" value="Submit Text">
+
+                <br><br>
+        </td>
+    </tr>
+    <tr>
+        <td><h3>Received Post:</h3><br>
+        <p>{{ api_response }}</p></td>
+    </tr>
+    </table>
 {% endblock %}
     </body>

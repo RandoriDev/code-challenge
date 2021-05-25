@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, json, abort
+from flask import Flask, render_template, request, json, make_response
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import requests, traceback
+import requests, time
 
 app = Flask(__name__)
 
@@ -17,6 +17,7 @@ class LogRequest(db.Model):
     request_method = db.Column(db.String)
     request_headers = db.Column(db.Text)
     request_text = db.Column(db.Text)
+    ip_address = db.Column(db.String)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 
@@ -42,7 +43,8 @@ def index():  # Display index.html as default
         # Build request data for log entry
         log_entry_headers = str(request.headers)
 
-        request_log = LogRequest(request_method='GET', request_headers=log_entry_headers, request_text="")
+        request_log = LogRequest(request_method='GET', request_headers=log_entry_headers, request_text="",
+                                 ip_address=request.remote_addr)
         db.session.add(request_log)
         db.session.commit()
 
@@ -53,7 +55,17 @@ def index():  # Display index.html as default
         # Get the element from the hidden form that contains the JSON string from the main form
         post_received_json = request.form['json_element']
 
-        request_log = LogRequest(request_method='POST', request_headers=log_entry_headers, request_text=post_received_json)
+        request_log = LogRequest(request_method='POST', request_headers=log_entry_headers,
+                                 request_text=post_received_json, ip_address=request.remote_addr)
+
+        # Check by IP address if user posted the same request twice.
+        query_result = request_log.query.filter_by(ip_address=request.remote_addr,
+                                                   request_method='POST').order_by(LogRequest.id.desc()).first()
+
+        if query_result.request_text == post_received_json:
+            time.sleep(2)
+
+        # Add the database entry after the check.
         db.session.add(request_log)
         db.session.commit()
 
@@ -67,8 +79,11 @@ def index():  # Display index.html as default
         if post_received_dict['is_malicious'] == 'is_malicious':
             raise Exception
         else:
-            api_post = requests.post(url=API_URL, data=post_received_json)
-            return render_template('index.html', received_post=api_post.json())
+            # Get only text_field from the JSON response.
+            api_response = requests.post(url=API_URL, data=post_received_json)
+            api_response_split = json.loads(api_response.text)
+            api_response_dict = json.loads(api_response_split['body'])
+            return render_template('index.html', api_response=api_response_dict['text_field']) #api_response_dict['text_field'])
     else:
         raise Exception
 
