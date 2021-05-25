@@ -13,18 +13,19 @@ db = SQLAlchemy(app)
 
 class RequestLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    request_text = db.Column(db.Text, unique=True, nullable=False)
+    request_text = db.Column(db.Text)
     ip_address = db.Column(db.String(20))
-    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, request_text, ip_address, timestamp):
-        self.request_text = request_text
-        self.ip_address = ip_address
-        self.timestamp = timestamp
 
-    def __repr__(self):
-        return "(Request Text: %s, IP Address: %s, Timestamp: %s)" \
-               % (self.request_text, self.ip_address, self.timestamp)
+# Insert log of HTTP request into the database.
+def log_request(request_text, ip_address):
+    request_log = RequestLog(request_text=request_text, ip_address=ip_address)
+    db.session.add(request_log)
+    db.session.commit()
+
+
+log_request("this is request text", "this is ip address")
 
 # Credentials for backend REST API (no authentication required)
 API_URL = 'https://4rxx4pwar8.execute-api.us-east-1.amazonaws.com/live/code-challenge'
