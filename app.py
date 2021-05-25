@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, json, abort
 from flask_sqlalchemy import SQLAlchemy
 import requests
-from requests.auth import HTTPBasicAuth
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
@@ -22,7 +21,7 @@ def index():  # Display index.html as default
             abort(401)
         else:
             api_post = requests.post(url=API_URL, data=post_received_json)
-            return render_template('index.html', received_post=json.dumps(post_received_dict))         #api_post.json())
+            return render_template('index.html', received_post=api_post.json())
     else:
         return render_template('index.html')
 

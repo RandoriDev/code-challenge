@@ -1,7 +1,7 @@
 function submit_json( form ){
     // Encodes the visible form data into a JSON string.
     form_json = to_json_string(form);
-    // Storing the JSON-encoded string in a hidden element which will then be submitted.
+    // Stores the JSON-encoded string in a hidden element which will then be submitted.
     document.getElementById("json_element").value = form_json;
     document.getElementById("hidden_form").submit();
 }
